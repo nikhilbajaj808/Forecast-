@@ -1,0 +1,335 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  height: 100vh;
+  overflow-x: hidden;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+}
+
+.bg-img {
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/static/Blue Sky Background Landscape.jpg') no-repeat center center;
+  background-size: cover;
+  z-index: -1;
+}
+
+.main-card {
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(12px);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 500px;
+  margin: 50px auto;
+}
+/* Keep Weather Forecast heading blue in dark mode */
+body.dark-mode .weather-heading {
+  color: #1E90FF !important; /* Force blue text */
+  text-shadow: 0 0 5px rgba(30, 144, 255, 0.8),
+               0 0 10px rgba(0, 191, 255, 0.6),
+               0 0 20px rgba(0, 191, 255, 0.4);
+  animation: fadeInUp 1.4s ease-out, pulseGlow 3s ease-in-out infinite;
+}
+
+
+/* Entry Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Glow Pulse Effect */
+@keyframes pulseGlow {
+  0% {
+    text-shadow: 0 0 5px rgba(30, 144, 255, 0.7),
+                 0 0 10px rgba(0, 191, 255, 0.5),
+                 0 0 15px rgba(0, 191, 255, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(30, 144, 255, 1),
+                 0 0 20px rgba(0, 191, 255, 0.8),
+                 0 0 30px rgba(0, 191, 255, 0.6);
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(30, 144, 255, 0.7),
+                 0 0 10px rgba(0, 191, 255, 0.5),
+                 0 0 15px rgba(0, 191, 255, 0.3);
+  }
+}
+
+.main-card input, 
+.main-card button {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+}
+button {
+  background: #1E73BE;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+button:hover {
+  background: #145a91;
+}
+
+.forecast-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  padding-bottom: 50px;
+}
+.forecast-card {
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(10px);
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  width: 220px;
+  min-height: 180px;
+}
+.forecast-card:hover {
+  transform: translateY(-5px) scale(1.05);
+}
+
+.emoji {
+  font-size: 3rem;
+  margin-bottom: 5px;
+}
+
+.glow-border {
+  border: 3px solid #1E90FF;
+  box-shadow: 0 0 10px #1E90FF, 0 0 20px #1E90FF, 0 0 40px #1E90FF;
+  animation: glowPulse 2s infinite alternate;
+}
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 10px #1E90FF; }
+  100% { box-shadow: 0 0 20px #00BFFF; }
+}
+
+/* Graph Button */
+.graph-btn {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #1E73BE;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.graph-btn:hover {
+  background: #145a91;
+}
+.graph-btn:active {
+  transform: scale(0.97);
+}
+/* Keep forecast cards' text white in dark mode */
+body.dark-mode .forecast-card {
+  color: white;
+}
+
+
+/* Animations for emojis */
+.sun-anim { animation: sunSpin 4s linear infinite; }
+@keyframes sunSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+.rain-anim { animation: rainBounce 0.8s ease-in-out infinite alternate; }
+@keyframes rainBounce { from { transform: translateY(0); } to { transform: translateY(5px); } }
+
+.cloud-anim { animation: cloudFloat 3s ease-in-out infinite alternate; }
+@keyframes cloudFloat { from { transform: translateX(0); } to { transform: translateX(5px); } }
+
+.thunder-anim { animation: thunderShake 0.3s ease-in-out infinite alternate; }
+@keyframes thunderShake { from { transform: translateX(0); } to { transform: translateX(3px); } }
+
+.snow-anim { animation: snowDrift 2.5s ease-in-out infinite alternate; }
+@keyframes snowDrift { from { transform: translateY(0); } to { transform: translateY(5px); } }
+
+/* AI Assistant Button */
+.ai-assistant-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 2.5rem;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 12px;
+  border-radius: 50%;
+  border: 2px solid #1E90FF;
+  box-shadow: 0 0 10px #1E90FF;
+  cursor: pointer;
+  z-index: 3000;
+}
+.ai-assistant-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #00BFFF;
+}
+
+/* AI Assistant Card */
+.ai-assistant-card {
+  position: fixed;
+  bottom: 110px;
+  right: 20px;
+  background: rgba(0,0,0,0.95);
+  backdrop-filter: blur(10px);
+  border: 2px solid #1E90FF;
+  box-shadow: 0 0 15px #1E90FF;
+  border-radius: 15px;
+  width: 320px;
+  max-width: 90vw;
+  display: none;
+  z-index: 2500;
+  color: white;
+  overflow: hidden;
+}
+
+/* Assistant Intro */
+#assistantIntro {
+  padding: 15px;
+}
+#assistantIntro button {
+  background: #1E73BE;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#assistantIntro button:hover {
+  background: #145a91;
+}
+
+/* Chat UI */
+.chat-header {
+  background: #1E73BE;
+  padding: 10px;
+  text-align: center;
+}
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  position: relative;
+}
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  margin-bottom: 60px;
+}
+.message {
+  padding: 8px 12px;
+  margin: 6px 0;
+  border-radius: 12px;
+  max-width: 80%;
+}
+.message.bot {
+  background: #1E90FF;
+  align-self: flex-start;
+}
+.message.user {
+  background: #4CAF50;
+  align-self: flex-end;
+}
+.chat-input {
+  display: flex;
+  border-top: 1px solid #444;
+  background: rgba(0,0,0,0.8);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.chat-input input {
+  flex: 1;
+  padding: 8px;
+  background: transparent;
+  color: white;
+  border: none;
+  outline: none;
+}
+.chat-input button {
+  background: #1E73BE;
+  color: white;
+  padding: 0 15px;
+  cursor: pointer;
+}
+.chat-input button:hover {
+  background: #145a91;
+}
+
+/* 🌙 DARK MODE BUTTON — top left */
+.dark-mode-toggle-header {
+  position: absolute; /* was fixed */
+  top: 20px;
+  left: 20px;
+  font-size: 1.8rem;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  border-radius: 50%;
+  border: 2px solid #1E90FF;
+  box-shadow: 0 0 10px #1E90FF;
+  cursor: pointer;
+  z-index: 5000;
+  transition: all 0.3s ease;
+}
+
+.dark-mode-toggle-header:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #00BFFF;
+}
+
+/* 🌙 DARK MODE STYLES */
+body.dark-mode {
+  background-color: #000;
+  color: black;
+}
+body.dark-mode .bg-img {
+  backdrop-filter: blur(5px) brightness(0.4);
+  background: rgba(0, 0, 0, 0.6);
+}
+body.dark-mode .main-card {
+  color: #111; /* This is forcing the text to black */
+}
+
+body.dark-mode input,
+body.dark-mode button {
+  color: black;
+  background: #f0f0f0;
+}
+@keyframes fadeDarkIn {
+  from { opacity: 0.4; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+/* 📱 Mobile adjustments for dark mode button & main card */
+@media (max-width: 768px) {
+  .dark-mode-toggle-header {
+    top: 10px;
+    left: 10px;
+    font-size: 1.5rem;
+    padding: 8px;
+  }
+
+  .main-card {
+    margin-top: 80px; /* Push card lower so it clears the dark mode toggle */
+    max-width: 90%;
+  }
+}
+

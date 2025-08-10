@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>🌤️ Weather Forecast</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<style>
+.message.bot { white-space: pre-line; }
+</style>
+</head>
+<body>
+
+<div class="bg-img" id="bgImage"></div>
+
+<!-- DARK MODE BUTTON CIRCLE -->
+<div class="dark-mode-toggle-header" onclick="toggleDarkMode()">🌙</div>
+
+<div class="main-card glow-border" id="mainCard">
+  <h1 class="weather-heading">🌤️ Weather Forecast</h1>
+  <input list="cities" id="city" placeholder="Enter city">
+  <datalist id="cities">
+    <option value="New York">
+    <option value="Delhi">
+    <option value="London">
+    <option value="Tokyo">
+    <option value="Paris">
+  </datalist>
+  <input type="date" id="date">
+  <div>
+    <button onclick="getWeather()">🔍 Get Forecast</button>
+    <button onclick="downloadCSV()">⬇️ Download CSV</button>
+    <button id="backBtn" style="display:none;" onclick="goBack()">⬅️ Back</button>
+  </div>
+</div>
+
+<div id="initial-emojis" class="forecast-row">
+  <div class="forecast-card glow-border"><div class="emoji sun-anim">☀️</div><p>Sunny</p></div>
+  <div class="forecast-card glow-border"><div class="emoji cloud-anim">☁️</div><p>Cloudy</p></div>
+  <div class="forecast-card glow-border"><div class="emoji rain-anim">🌧️</div><p>Rainy</p></div>
+  <div class="forecast-card glow-border"><div class="emoji thunder-anim">🌦️</div><p>Drizzle</p></div>
+</div>
+
+<div id="results" class="forecast-row"></div>
+
+<script>
+let forecastData = [];
+
+function getEmoji(condition) {
+  const map = {
+    "Clear": { emoji: "☀️" },
+    "Clouds": { emoji: "☁️" },
+    "Rain": { emoji: "🌧️" },
+    "Thunderstorm": { emoji: "🌦️" },
+    "Drizzle": { emoji: "🌦️" },
+    "Snow": { emoji: "❄️" }
+  };
+  return map[condition] || { emoji: "🌈" };
+}
+
+async function getWeather() {
+  const city = document.getElementById('city').value;
+  const date = document.getElementById('date').value;
+  if (!city || !date) return alert("Please enter both city and date");
+
+  document.getElementById('initial-emojis').style.display = 'none';
+  document.getElementById('backBtn').style.display = 'inline-block';
+
+  const res = await axios.post('/get_weather', { city, date });
+  if (res.data.error) return alert(res.data.error);
+
+  forecastData = res.data.forecast;
+  let html = ``;
+  forecastData.forEach(day => {
+    const { emoji } = getEmoji(day.condition);
+    html += `
+      <div class="forecast-card glow-border dark-card">
+        <div class="emoji">${emoji}</div>
+        <h4>${day.date}</h4>
+        <p><strong>${day.condition}</strong> (${day.description})</p>
+        <p>🌡 Temp: ${day.temperature}°C</p>
+        <p>💧 Humidity: ${day.humidity}%</p>
+        <p>💨 Wind: ${day.wind_speed} m/s</p>
+        <p>🌧 Rain Chance: <strong>${day.probability}%</strong></p>
+        <button class="graph-btn" onclick='createWeatherGraph(${JSON.stringify(day)})'>📊 Download Graph</button>
+      </div>
+    `;
+  });
+  document.getElementById('results').innerHTML = html;
+}
+
+function goBack() {
+  document.getElementById('results').innerHTML = "";
+  document.getElementById('backBtn').style.display = 'none';
+  document.getElementById('initial-emojis').style.display = 'flex';
+}
+
+function downloadCSV() {
+  if (forecastData.length === 0) return alert("Get weather data first!");
+  const header = "Date,Condition,Description,Temperature (°C),Humidity (%),Wind Speed (m/s),Rain Probability (%)\n";
+  const rows = forecastData.map(d => `${d.date},${d.condition},${d.description},${d.temperature},${d.humidity},${d.wind_speed},${d.probability}`).join("\n");
+  const blob = new Blob([header + rows], { type: "text/csv" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "forecast.csv";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function createWeatherGraph(day) {
+  const labels = ["Temperature (°C)", "Humidity (%)", "Wind Speed (m/s)", "Rain Probability (%)"];
+  const values = [day.temperature, day.humidity, day.wind_speed, day.probability];
+
+  const canvas = document.createElement("canvas");
+  canvas.width = 800;
+  canvas.height = 600;
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext("2d");
+
+  const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: `Weather Stats - ${day.date}`,
+        data: values,
+        backgroundColor: ['#ffcc00', '#00bfff', '#4caf50', '#ff4444']
+      }]
+    },
+    options: {
+      responsive: false,
+      plugins: {
+        legend: { display: false },
+        title: { display: true, text: `Weather Data for ${day.date}`, color: '#000', font: { size: 18 } }
+      },
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+
+  setTimeout(() => {
+    const link = document.createElement('a');
+    link.download = `weather_graph_${day.date.replace(/[\s:]/g, "_")}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+    chart.destroy();
+    document.body.removeChild(canvas);
+  }, 500);
+}
+
+// DARK MODE TOGGLE
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+}
+</script>
+</body>
+</html>
