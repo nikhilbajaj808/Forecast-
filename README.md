@@ -1,36 +1,34 @@
-# ​ Animated Weather Forecast App
+# ⛅ Animated Weather Forecast App
 
 > **Responsive, Animated & Dark Mode Weather Forecast App** — Powered by Flask + OpenWeather API 🌦️  
 
-![Live App Preview](https://forecast-d9ft.onrender.com/)  <!-- Live interface embedded as image -->
+---
+
+## 🌐 Live App Preview
+
+🔗 **[Click here to view the live app](https://forecast-d9ft.onrender.com/)**  
 
 ---
 
-##  Live Features Snapshot
+## ✨ Features
 
-- Weather responses display **clear emojis** representing conditions like:  
-  - **Sunny** (☀️)  
-  - **Cloudy** (☁️)  
-  - **Rainy** (🌧️)  
-  - **Drizzle** (🌦️)  
-
-- Controls available for:
-  - **“Get Forecast”** (Fetches data)
-  - **“Download CSV”** (Exports data)
-  - **“Back”** (Navigation)
-
-- Clean and intuitive UI—perfect for quick weather insights!
+- 🌍 **Fetch 3-Day Forecast** — Weather data in **3-hour intervals** using **OpenWeather API**  
+- 🌓 **Dark & Light Mode** toggle for better user experience  
+- 📊 **Downloadable Weather Graphs** for temperature, humidity, and conditions  
+- 📱 **Responsive Design** — Works perfectly on mobile, tablet, and desktop  
+- 🎭 **Smooth Animations & Hover Effects** for weather cards and icons  
+- 🌦️ **Dynamic Weather Emojis** for easy, visual weather interpretation  
+- 📥 **CSV Export** for offline usage  
 
 ---
 
-##  Updated README Structure
+## 🛠️ Tech Stack
 
-### Features Highlight 
-- **Live Weather Previews** with upbeat weather emojis  
-- Fast **3-day forecasts** at **3-hour intervals**  
-- Modern **dark-mode ready**, responsive UI  
-- **CSV download** & dynamic data visualization  
-- **Animations**, hover effects, and smooth transitions  
+- **Backend:** Flask (Python)  
+- **Frontend:** HTML, CSS, JavaScript  
+- **API:** [OpenWeather API](https://openweathermap.org/api)  
+- **Charts:** Chart.js 📊  
+- **Animations:** CSS transitions + keyframes 🎬  
 
-### Live Preview Section (Already Included Above)
-- Embeds the current UI snapshot to show exactly how the app looks in production
+---
+
