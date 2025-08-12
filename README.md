@@ -6,7 +6,9 @@
 
 ## 🌐 Live App Preview
 
-🔗 **[Click here to view the live app](https://forecast-d9ft.onrender.com/)**  
+<a href="https://forecast-d9ft.onrender.com/" target="_blank">
+  🔗 Click here to view the live app
+</a>  
 
 ---
 
@@ -32,3 +34,17 @@
 
 ---
 
+## 📦 Installation & Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/weather-forecast-app.git
+
+# Navigate to the project folder
+cd weather-forecast-app
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the Flask app
+python app.py
